@@ -4,21 +4,17 @@
 #include "opencv2/core.hpp"
 #include "opencv2/features2d.hpp"
 #include "opencv2/highgui.hpp"
+
+#include "load_image_data.hpp"
 // const int max_features=500;
 
-void load_images(){
-    std::string folderPath = "/home/yash/Documents/image_data";
-    cv::String pattern = folderPath + "*.jpg";
-    
-    std::vector<cv::String> imageFiles;
-    cv::glob(pattern, imageFiles, false); 
-    for (const auto& file : imageFiles) 
-    {
-        cv::Mat image = cv::imread(file);
-        
-    }
-}
+// std::string image_path ;
 
-int main(){
-    return 0;
+int main()
+{
+    std::string image_path = "/home/yash/Documents/DeepV-SLAM/data/";
+
+    std::vector<cv::Mat> images = load_images(image_path);
+    std::cout<<"all images saved";
+    std::cout<<images.size();
 }
