@@ -1,7 +1,7 @@
 #include "../include/camera_pose.h"
 
 
-void estimatePose(const std::vector<cv::Point2f> kp_l, const std::vector<cv::Point2f> kp_r)
+std::tuple<cv::Mat, cv::Mat, cv::Mat> estimatePose(const std::vector<cv::Point2f> kp_l, const std::vector<cv::Point2f> kp_r)
 {
     cv::Mat f_matrix = cv::findFundamentalMat(kp_l, kp_r, cv::FM_8POINT);
     std::cout<<"Fundamental Matrix:\n"<<f_matrix<<std::endl;;
@@ -17,10 +17,15 @@ void estimatePose(const std::vector<cv::Point2f> kp_l, const std::vector<cv::Poi
     // Recover the camera pose (rotation and translation)
     cv::Mat rot_matrix, trans_vector;
     cv::recoverPose(essential_matrix, kp_l, kp_r, camera_matrix, rot_matrix, trans_vector);
-    
+
+    cv::Mat camera_center = -rot_matrix.t() * trans_vector;
+
     // Display the rotation and translation
-    std::cout << "Rotation Matrix:\n" << rot_matrix << std::endl;
-    std::cout << "Translation Vector:\n" << trans_vector << std::endl;
+    // std::cout << "Rotation Matrix:\n" << rot_matrix << std::endl;
+    // std::cout << "Translation Vector:\n" << trans_vector << std::endl;
+    // std::cout << "camera center:\n" << camera_center << std::endl;
+
+    return std::make_tuple(rot_matrix, trans_vector, camera_center);
     // focalLength    = [535.4, 539.2]; 
     // principalPoint = [320.1, 247.6]; 
 }
