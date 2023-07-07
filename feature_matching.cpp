@@ -12,9 +12,24 @@
 
 int main()
 {
-    std::string image_path = "/home/yash/Documents/DeepV-SLAM/data/";
-
+    std::string image_path = cv::samples::findFile("starry_night.jpg");
     std::vector<cv::Mat> images = load_images(image_path);
     std::cout<<"all images saved";
     std::cout<<images.size();
+    std::cout << CV_VERSION << std::endl;
+
+    cv::Mat img = cv::imread(image_path, cv::IMREAD_COLOR);
+
+    if (img.empty()) {
+        std::cout << "Could not read the image:" << image_path << "\n";
+        return 1;
+    }
+
+    cv::imshow("IMage", img);
+    int k = cv::waitKey(0);
+
+    if (k == 's') {
+        imwrite("starry_night", img);
+    }
+    return 0;
 }

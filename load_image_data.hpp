@@ -11,8 +11,7 @@ std::vector<cv::Mat> load_images(const std::string& imagePath)
 {
     std::vector<cv::Mat> image_data;
 
-    std::string folderPath = imagePath;
-    cv::String pattern = folderPath + "*.png";
+    cv::String pattern = imagePath + "*.png";
     
     std::vector<cv::String> imageFiles;
     cv::glob(pattern, imageFiles, false); 
