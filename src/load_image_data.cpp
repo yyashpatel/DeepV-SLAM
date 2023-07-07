@@ -2,7 +2,7 @@
 // Created by adity on 7/6/2023.
 //
 
-#include "load_image_data.h"
+#include "../include/load_image_data.h"
 
 std::vector<cv::Mat> load_images(const std::string& imagePath)
 {

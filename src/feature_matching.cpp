@@ -1,11 +1,14 @@
-#include "feature_matching.h"
+#include "../include/feature_matching.h"
 
-void features_2d(const cv::Mat image_1, const cv::Mat image_2)
+
+
+std::tuple<std::vector<cv::Point2f>, std::vector<cv::Point2f>> features_2d(const cv::Mat image_1, const cv::Mat image_2)
 {
     assert(image_1.data != nullptr && image_2.data != nullptr);
 
     std::vector<cv::KeyPoint> keypoints_1, keypoints_2;
-    std::vector<cv::KeyPoint> kp_1_matched, kp_2_matched;
+    std::vector<cv::Point2f> kp_img_1, kp_img_2;
+    std::vector<cv::DMatch> good_matches;
 
     // Initialize feature detectors and descriptors
     cv::Ptr<cv::ORB> detector = cv::ORB::create();
@@ -19,13 +22,6 @@ void features_2d(const cv::Mat image_1, const cv::Mat image_2)
     // cv::Ptr<FeatureDetector> detector = ORB::create();
     // cv::Ptr<DescriptorExtractor> descriptor = ORB::create();
 
-
-    // detector->detect(image_1, keypoints_1);
-    // detector->detect(image_2, keypoints_2);
-
-    // descriptor->compute(image_1, keypoints_1, descriptors_1);
-    // descriptor->compute(image_2, keypoints_2, descriptors_2);
-
     std::vector<cv::DMatch> brute_hamming_matches;
     matcher->match(descriptors_1, descriptors_2, brute_hamming_matches);
 
@@ -38,8 +34,6 @@ void features_2d(const cv::Mat image_1, const cv::Mat image_2)
         if ( dist > max_dist ) max_dist = dist;
     }
 
-    std::vector<cv::DMatch> good_matches;
-
 
     for ( int i = 0; i < descriptors_1.rows; i++ )
     {
@@ -49,19 +43,15 @@ void features_2d(const cv::Mat image_1, const cv::Mat image_2)
         }
     }
 
-    for (auto match : good_matches)
+    for (int i = 0; i < (int) good_matches.size(); i++) 
     {
-
-        kp_1_matched.push_back(keypoints_1[match.queryIdx]);
-        kp_2_matched.push_back(keypoints_2[match.trainIdx]);
-
+        kp_img_1.push_back(keypoints_1[good_matches[i].queryIdx].pt);
+        kp_img_2.push_back(keypoints_2[good_matches[i].trainIdx].pt);
     }
 
-    //std::cout<<kp_1_matched<<'\n';
-    //std::cout<<kp_2_matched<<std::endl;
-
-    cv::Mat matchImg;
-    cv::drawMatches(image_1, keypoints_1, image_2, keypoints_2, brute_hamming_matches, matchImg);
-    cv::imshow("Matches", matchImg);
-    cv::waitKey(0);
+    // cv::Mat matchImg;
+    // cv::drawMatches(image_1, keypoints_1, image_2, keypoints_2, brute_hamming_matches, matchImg);
+    // cv::imshow("Matches", matchImg);
+    // cv::waitKey(0);
+    return std::make_tuple(kp_img_1, kp_img_2);   
 }
