@@ -1,20 +1,34 @@
 cmake_minimum_required(VERSION 3.25)
 project(DeepV_SLAM)
 
+# set CPP standard
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(DeepV_SLAM
-        feature_matching.cpp
-        load_image_data.hpp)
-
+# relevant library stuff
 set(ENV{OPENCV_DIR}  "C:/Program Files/opencv/build/x64/vc16/lib")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 set(CMAKE_GENERATOR_PLATFORM x64)
 set(CMAKE_GENERATOR_ARCHITECTURE x64)
-
-find_package(OpenCV REQUIRED)
-include_directories(${OpenCV_INCLUDE_DIRS})
-
 set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
 
-target_link_libraries(DeepV_SLAM ${OpenCV_LIBS})
+# define source files
+set(SOURCES
+        src/main.cpp
+        src/feature_matching.cpp
+        src/load_image_data.cpp)
+
+# define header files
+set(HEADERS
+        include/feature_matching.h
+        include/load_image_data.h)
+
+find_package(OpenCV REQUIRED)
+#find_package(Eigen REQUIRED)
+#find_package(Ceres REQUIRED)
+
+include_directories(include ${OpenCV_INCLUDE_DIRS} )
+
+# Create executable
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})

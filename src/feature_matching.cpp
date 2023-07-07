@@ -1,16 +1,9 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <opencv2/opencv.hpp>
-#include "opencv2/core.hpp"
-#include "opencv2/features2d.hpp"
-#include "opencv2/highgui.hpp"
-
+#include "feature_matching.h"
 
 void features_2d(const cv::Mat image_1, const cv::Mat image_2)
 {
     assert(image_1.data != nullptr && image_2.data != nullptr);
-    
+
     std::vector<cv::KeyPoint> keypoints_1, keypoints_2;
     std::vector<cv::KeyPoint> kp_1_matched, kp_2_matched;
 
@@ -29,7 +22,7 @@ void features_2d(const cv::Mat image_1, const cv::Mat image_2)
 
     // detector->detect(image_1, keypoints_1);
     // detector->detect(image_2, keypoints_2);
-    
+
     // descriptor->compute(image_1, keypoints_1, descriptors_1);
     // descriptor->compute(image_2, keypoints_2, descriptors_2);
 
@@ -46,8 +39,8 @@ void features_2d(const cv::Mat image_1, const cv::Mat image_2)
     }
 
     std::vector<cv::DMatch> good_matches;
-    
-    
+
+
     for ( int i = 0; i < descriptors_1.rows; i++ )
     {
         if ( brute_hamming_matches[i].distance <= std::max( 2*min_dist, 20.0 ) )
@@ -56,9 +49,9 @@ void features_2d(const cv::Mat image_1, const cv::Mat image_2)
         }
     }
 
-    for (auto match : good_matches) 
+    for (auto match : good_matches)
     {
-        
+
         kp_1_matched.push_back(keypoints_1[match.queryIdx]);
         kp_2_matched.push_back(keypoints_2[match.trainIdx]);
 
@@ -71,4 +64,4 @@ void features_2d(const cv::Mat image_1, const cv::Mat image_2)
     cv::drawMatches(image_1, keypoints_1, image_2, keypoints_2, brute_hamming_matches, matchImg);
     cv::imshow("Matches", matchImg);
     cv::waitKey(0);
-} 
+}
