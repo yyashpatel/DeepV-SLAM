@@ -8,12 +8,17 @@
 #include "../include/camera_pose.h"
 #include "../include/triangulation.h"
 
-
+#include <filesystem>
 
 int main()
-{
-    std::string image_path = "C:\\Users\\adity\\CLionProjects\\DeepV-SLAM\\data\\";
-    // std::string image_path = "/home/yash/Documents/DeepV-SLAM/data/";
+{ // print the library versions
+    std::cout << "[OpenCV Version] " << CV_VERSION << "\n";
+
+    // dynamically infer the data directory
+    std::filesystem::path current_path = std::filesystem::current_path().parent_path() / "data";
+    const std::string &image_path = current_path.generic_string();
+    std::cout << "[Current Image Directory] " << image_path << "\n\n";
+
     std::vector<cv::Mat> images = load_images(image_path);
     cv::Mat image_1 = images[0];
     cv::Mat image_2 = images[1];
@@ -22,7 +27,7 @@ int main()
     std::vector<cv::Point2f> kp_l = std::get<0>(key_pts);
     std::vector<cv::Point2f> kp_r = std::get<1>(key_pts);
 
-    std::tuple<cv::Mat, cv::Mat, cv::Mat> pose = estimatePose(kp_l,kp_r);
+    std::tuple<cv::Mat, cv::Mat, cv::Mat> pose = estimatePose(kp_l, kp_r);
     cv::Mat rot_matrix = std::get<0>(pose);
     cv::Mat trans_vector = std::get<1>(pose);
     cv::Mat camera_center = std::get<2>(pose);
@@ -34,5 +39,5 @@ int main()
 
     cv::Mat points_4d = triangulate3D(kp_l, kp_r, camera_proj_matrix1, camera_proj_matrix2);
 
-    std::cout << CV_VERSION << "\n";
+    return 0;
 }
