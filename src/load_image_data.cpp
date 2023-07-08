@@ -4,7 +4,7 @@
 
 #include "../include/load_image_data.h"
 
-std::vector<cv::Mat> load_images(const std::string &imagePath)
+std::vector<cv::Mat> LoadImages(const std::string &imagePath)
 {
     std::vector<cv::Mat> image_data;
 

@@ -14,6 +14,6 @@
 #include "opencv2/features2d.hpp"
 #include "opencv2/highgui.hpp"
 
-std::vector<cv::Mat> load_images(const std::string &imagePath);
+std::vector<cv::Mat> LoadImages(const std::string &imagePath);
 
 #endif

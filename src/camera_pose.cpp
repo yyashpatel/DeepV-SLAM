@@ -1,7 +1,7 @@
 #include "../include/camera_pose.h"
 
 std::tuple<cv::Mat, cv::Mat, cv::Mat>
-estimatePose(const std::vector<cv::Point2f> kp_l,
+EstimatePose(const std::vector<cv::Point2f> kp_l,
              const std::vector<cv::Point2f> kp_r)
 {
     cv::Mat f_matrix = cv::findFundamentalMat(kp_l, kp_r, cv::FM_8POINT);

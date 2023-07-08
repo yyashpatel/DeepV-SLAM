@@ -1,6 +1,6 @@
 #include "../include/feature_matching.h"
 
-std::tuple<std::vector<cv::Point2f>, std::vector<cv::Point2f>> features_2d(const cv::Mat image_1, const cv::Mat image_2)
+std::tuple<std::vector<cv::Point2f>, std::vector<cv::Point2f>> FindAndMatchFeatures(const cv::Mat image_1, const cv::Mat image_2)
 {
     assert(image_1.data != nullptr && image_2.data != nullptr);
 
@@ -49,8 +49,24 @@ std::tuple<std::vector<cv::Point2f>, std::vector<cv::Point2f>> features_2d(const
     }
 
     // cv::Mat matchImg;
-    // cv::drawMatches(image_1, keypoints_1, image_2, keypoints_2, brute_hamming_matches, matchImg);
+    // cv::drawMatches(image_1, keypoints_1, image_2, keypoints_2, good_matches, matchImg);
     // cv::imshow("Matches", matchImg);
     // cv::waitKey(0);
     return std::make_tuple(kp_img_1, kp_img_2);
+}
+
+std::tuple<std::vector<cv::KeyPoint>, cv::Mat> RegisterNewImage(const cv::Mat image_new)
+{
+    assert(image_1.data != nullptr);
+    std::vector<cv::KeyPoint> keypoints_new;
+    std::vector<cv::Point2f> kp_new;
+
+    // Initialize feature detectors and descriptors
+    cv::Ptr<cv::ORB> detector = cv::ORB::create();
+    cv::Ptr<cv::DescriptorMatcher> matcher = cv::DescriptorMatcher::create("BruteForce-Hamming");
+
+    cv::Mat descriptors_new;
+    detector->detectAndCompute(image_new, cv::noArray(), keypoints_new, descriptors_new);
+
+    return std::make_tuple(keypoints_new, descriptors_new);
 }
