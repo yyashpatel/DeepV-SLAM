@@ -4,7 +4,7 @@ cv::Mat triangulate3D(const std::vector<cv::Point2f> kp_l,
                       const std::vector<cv::Point2f> kp_r,
                       const cv::Mat camera_proj_matrix1,
                       const cv::Mat camera_proj_matrix2)
-{   
+{
     // store homogeneous and cartesian coordinates
     cv::Mat points_4d, points_3d;
 

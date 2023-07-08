@@ -11,8 +11,8 @@
 #include "opencv2/highgui.hpp"
 
 cv::Mat triangulate3D(const std::vector<cv::Point2f> kp_l,
-                    const std::vector<cv::Point2f> kp_r, 
-                    const cv::Mat camera_proj_matrix, 
-                    const cv::Mat camera_proj_matrix2);
+                      const std::vector<cv::Point2f> kp_r,
+                      const cv::Mat camera_proj_matrix,
+                      const cv::Mat camera_proj_matrix2);
 
 #endif
