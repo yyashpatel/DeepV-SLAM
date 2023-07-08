@@ -12,8 +12,8 @@
 
 int main()
 {
-    //std::string image_path = "C:\\Users\\adity\\CLionProjects\\DeepV-SLAM\\data\\";
-    std::string image_path = "/home/yash/Documents/DeepV-SLAM/data/";
+    std::string image_path = "C:\\Users\\adity\\CLionProjects\\DeepV-SLAM\\data\\";
+    // std::string image_path = "/home/yash/Documents/DeepV-SLAM/data/";
     std::vector<cv::Mat> images = load_images(image_path);
     cv::Mat image_1 = images[0];
     cv::Mat image_2 = images[1];
@@ -34,5 +34,5 @@ int main()
 
     cv::Mat points_4d = triangulate3D(kp_l, kp_r, camera_proj_matrix1, camera_proj_matrix2);
 
-
+    std::cout << CV_VERSION << "\n";
 }

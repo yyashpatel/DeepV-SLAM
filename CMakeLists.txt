@@ -12,10 +12,13 @@ set(CMAKE_GENERATOR_ARCHITECTURE x64)
 set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
 
 # define source files
-set(SOURCES src/main.cpp src/feature_matching.cpp src/load_image_data.cpp)
+set(SOURCES src/main.cpp src/feature_matching.cpp src/load_image_data.cpp
+            src/camera_pose.cpp src.cpp/ src/triangulation.cpp)
 
 # define header files
-set(HEADERS include/feature_matching.h include/load_image_data.h)
+set(HEADERS include/feature_matching.h include/load_image_data.h
+            include/camera_pose.h include/triangulation.h)
+            
 find_package(OpenCV REQUIRED)
 
 # find_package(Eigen REQUIRED) find_package(Ceres REQUIRED)

@@ -1,18 +1,18 @@
 #include "../include/triangulation.h"
 
 cv::Mat triangulate3D(const std::vector<cv::Point2f> kp_l,
-                    const std::vector<cv::Point2f> kp_r, 
-                    const cv::Mat camera_proj_matrix1, 
-                    const cv::Mat camera_proj_matrix2)
-{
+                      const std::vector<cv::Point2f> kp_r,
+                      const cv::Mat camera_proj_matrix1,
+                      const cv::Mat camera_proj_matrix2)
+{   
+    // store homogeneous and cartesian coordinates
     cv::Mat points_4d, points_3d;
 
+    // triangulate points and find homogeneous world coordinates
     cv::triangulatePoints(camera_proj_matrix1, camera_proj_matrix2, kp_l, kp_r, points_4d);
 
-    //cv::divide(points_4d.colRange(0,3), points_4d.col(3), points_3d);
+    // convert homogeneous coordinates to cartesian points
+    cv::convertPointsFromHomogeneous(points_4d.t(), points_3d);
 
-    std::cout<<points_4d.row(0)<<'\n'<<std::endl;
-
-    return points_4d;
-
+    return points_3d;
 }

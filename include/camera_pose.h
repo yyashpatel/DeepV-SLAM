@@ -10,6 +10,6 @@
 #include "opencv2/features2d.hpp"
 #include "opencv2/highgui.hpp"
 
-void estimatePose(const std::vector<cv::Point2f> kp_l, const std::vector<cv::Point2f> kp_r);
+std::tuple<cv::Mat, cv::Mat, cv::Mat> estimatePose(const std::vector<cv::Point2f> kp_l, const std::vector<cv::Point2f> kp_r);
 
 #endif
