@@ -2,9 +2,9 @@
 #define TRIANGULATION_H
 
 #include <iostream>
+#include <opencv2/opencv.hpp>
 #include <string>
 #include <vector>
-#include <opencv2/opencv.hpp>
 
 #include "opencv2/core.hpp"
 #include "opencv2/features2d.hpp"

@@ -2,14 +2,15 @@
 #define CAMERA_POSE_H
 
 #include <iostream>
+#include <opencv2/opencv.hpp>
 #include <string>
 #include <vector>
-#include <opencv2/opencv.hpp>
 
 #include "opencv2/core.hpp"
 #include "opencv2/features2d.hpp"
 #include "opencv2/highgui.hpp"
 
-std::tuple<cv::Mat, cv::Mat, cv::Mat> EstimatePose(const std::vector<cv::Point2f> kp_l, const std::vector<cv::Point2f> kp_r);
+std::tuple<cv::Mat, cv::Mat, cv::Mat> EstimatePose(
+    const std::vector<cv::Point2f> kp_l, const std::vector<cv::Point2f> kp_r);
 
 #endif
